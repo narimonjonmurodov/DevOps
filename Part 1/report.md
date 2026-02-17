@@ -1,3 +1,25 @@
+# UNIX/Linux operating systems (Basic).
+
+Linux system installation and updates. Administration basics.
+
+## Contents
+   1. [Installation of the OS](#part-1-installation-of-the-os)  
+   2. [Creating a user](#part-2-creating-a-user)  
+   3. [Setting up the OS network](#part-3-setting-up-the-os-network)   
+   4. [OS Update](#part-4-os-update)  
+   5. [Using the sudo command](#part-5-using-the-sudo-command)  
+   6. [Installing and configuring the time service](#part-6-installing-and-configuring-the-time-service)  
+   7. [Installing and using text editors](#part-7-installing-and-using-text-editors)  
+   8. [Installing and basic setup of SSHD service](#part-8-installing-and-basic-setup-of-the-sshd-service)  
+   9. [Installing and using the top, htop utilities](#part-9-installing-and-using-the-top-htop-utilities)   
+   10. [Using the fdisk utility](#part-10-using-the-fdisk-utility)   
+   11. [Using the df utility](#part-11-using-the-df-utility)    
+   12. [Using the du utility](#part-12-using-the-du-utility)    
+   13. [Installing and using the ncdu utility](#part-13-installing-and-using-the-ncdu-utility)    
+   14. [Working with system logs](#part-14-working-with-system-logs)     
+   15. [Using the CRON job scheduler](#part-15-using-the-cron-job-scheduler)
+
+
 ## Part 1. Installation of the OS
 - ![Ubuntu 20.04 Server LTS without GUI](./img/1.png)
 
