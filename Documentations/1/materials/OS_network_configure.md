@@ -1,4 +1,4 @@
-## ## Network interfaces
+## Network interfaces
 Network interfaces are used to transfer data between programs over a computer network. \
 In Linux, any data that a computer sends to or receives from the network goes through a network interface. \
 Network interfaces can be either physical or virtual. \
