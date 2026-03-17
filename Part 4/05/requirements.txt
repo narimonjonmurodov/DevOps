@@ -1,0 +1,25 @@
+NGINX Log Monitoring Script
+
+Usage:
+  ./main.sh <option>
+
+Description:
+  This script analyzes nginx log files using awk and prints monitoring
+  information depending on the selected option.
+
+Options:
+  1 - Display all log entries sorted by response code.
+  2 - Display all unique IP addresses found in the log entries.
+  3 - Display all requests with error response codes (4xx and 5xx).
+  4 - Display all unique IP addresses that generated error requests.
+
+Requirements:
+  - Nginx log files must exist in the 04 directory from Task 4. 
+  - Logs must follow the Combined Log Format.
+  - The script must be run with exactly one parameter (1, 2, 3, or 4).
+
+Example:
+  ./main.sh 1
+  ./main.sh 2
+  ./main.sh 3
+  ./main.sh 4
