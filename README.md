@@ -14,8 +14,8 @@ All topics are organized into structured modules. Each folder contains detailed 
 | DevOps-I | DO2_Linux Network [link](./Part%202/README.md) | Networking concepts in Linux, IP configuration, ports, protocols, and troubleshooting |
 | DevOps-I | DO3_LinuxMonitoring v1.0 [link](./Part%203/README.md) | Introduction to system monitoring, resource tracking, and basic monitoring tools |
 | DevOps-I | DO4_LinuxMonitoring v2.0 [link](./Part%204/README.md) | Advanced monitoring concepts, improved setups, and deeper system analysis |
-| Python bootcamp | AP1-Py-T01 [link](./Part%205/README.md)            | Python basics, scripting, and foundational programming concepts |
-| Python bootcamp | AP1-Py-T02 [link](./Part%205/README.md)            | Intermediate Python, functions, OOP basics, and structured coding |
+| Python bootcamp | AP1-Py-T01 [link](./Part%205/README.md) | Python basics, scripting, and foundational programming concepts |
+| Python bootcamp | AP1-Py-T02 [link](./Part%206/README.md) | Intermediate Python, functions, OOP basics, and structured coding |
 
 ---
 
