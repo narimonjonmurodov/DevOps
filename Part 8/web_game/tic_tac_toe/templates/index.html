@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tic-Tac-Toe AI</title>
+
+<style>
+
+* {
+box-sizing: border-box;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+margin:0;
+padding:0;
+background: #0f172a;
+color:white;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.container {
+background:#111827;
+padding:30px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+width:380px;
+}
+
+.title {
+text-align:center;
+font-size:26px;
+font-weight:600;
+margin-bottom:20px;
+}
+
+.status {
+text-align:center;
+margin-bottom:20px;
+color:#94a3b8;
+}
+
+.board {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:20px;
+}
+
+.cell {
+height:90px;
+background:#1f2937;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:36px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.cell:hover {
+background:#374151;
+}
+
+.cell.disabled {
+cursor:not-allowed;
+}
+
+/* ✅ UPDATED */
+.controls {
+display:flex;
+}
+
+button {
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.new-game {
+background:#3b82f6;
+color:white;
+}
+
+.reset {
+background:#ef4444;
+color:white;
+}
+
+.game-id {
+margin-top:15px;
+font-size:12px;
+color:#64748b;
+text-align:center;
+}
+
+.loader {
+display:none;
+text-align:center;
+margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">Tic-Tac-Toe AI</div>
+
+<div class="status" id="status">Your turn</div>
+
+<div class="loader" id="loader">AI Thinking...</div>
+
+<div class="board" id="board"></div>
+
+<div class="controls">
+<button class="new-game" onclick="newGame()">New Game</button>
+</div>
+
+<div class="game-id" id="gameId"></div>
+
+</div>
+
+<script>
+
+let board = [
+[0,0,0],
+[0,0,0],
+[0,0,0]
+]
+
+let gameId = generateUUID()
+
+let playing = true
+
+function generateUUID(){
+return crypto.randomUUID()
+}
+
+function drawBoard(){
+
+const boardDiv = document.getElementById("board")
+boardDiv.innerHTML = ""
+
+for(let i=0;i<3;i++){
+for(let j=0;j<3;j++){
+
+const cell = document.createElement("div")
+cell.classList.add("cell")
+
+cell.onclick = () => makeMove(i,j)
+
+cell.innerText = getSymbol(board[i][j])
+
+if(board[i][j] !== 0){
+cell.classList.add("disabled")
+}
+
+boardDiv.appendChild(cell)
+}
+}
+
+}
+
+function getSymbol(value){
+if(value === 1) return "X"
+if(value === 2) return "O"
+return ""
+}
+
+async function makeMove(i,j){
+
+if(!playing) return
+
+if(board[i][j] !== 0) return
+
+board[i][j] = 1
+
+playing = false
+
+drawBoard()
+
+showLoader(true)
+
+try{
+
+const response = await fetch(`/game/${gameId}`,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({
+board: board
+})
+})
+
+if(!response.ok){
+const error = await response.json()
+alert(error.error)
+showLoader(false)
+return
+}
+
+const data = await response.json()
+
+board = data.board
+
+checkGameState()
+
+}
+catch(error){
+console.error(error)
+alert("Server error")
+}
+
+showLoader(false)
+
+playing = true
+
+drawBoard()
+
+}
+
+function showLoader(show){
+const loader = document.getElementById("loader")
+loader.style.display = show ? "block" : "none"
+}
+
+function newGame(){
+board = [
+[0,0,0],
+[0,0,0],
+[0,0,0]
+]
+
+gameId = generateUUID()
+
+playing = true
+
+updateGameId()
+
+drawBoard()
+}
+
+/* ❌ resetBoard() REMOVED */
+
+function updateGameId(){
+
+const el = document.getElementById("gameId")
+
+el.innerText = "Game ID: " + gameId
+
+}
+
+function checkGameState(){
+
+const winner = checkWinner()
+
+if(winner === 1){
+setStatus("You win 🎉")
+playing = false
+}
+
+if(winner === 2){
+setStatus("AI wins 🤖")
+playing = false
+}
+
+if(isDraw()){
+setStatus("Draw")
+playing = false
+}
+
+}
+
+function setStatus(text){
+document.getElementById("status").innerText = text
+}
+
+function checkWinner(){
+
+for(let i=0;i<3;i++){
+if(board[i][0] && board[i][0]===board[i][1] && board[i][1]===board[i][2]){
+return board[i][0]
+}
+}
+
+for(let i=0;i<3;i++){
+if(board[0][i] && board[0][i]===board[1][i] && board[1][i]===board[2][i]){
+return board[0][i]
+}
+}
+
+if(board[0][0] && board[0][0]===board[1][1] && board[1][1]===board[2][2]){
+return board[0][0]
+}
+
+if(board[0][2] && board[0][2]===board[1][1] && board[1][1]===board[2][0]){
+return board[0][2]
+}
+
+return null
+}
+
+function isDraw(){
+return board.flat().every(x => x !== 0)
+}
+
+updateGameId()
+
+drawBoard()
+
+</script>
+
+</body>
+</html>
